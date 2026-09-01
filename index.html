@@ -185,7 +185,7 @@
         }
 
         /* ============================================================
-                   PRELOADER (2 segundos)
+                   PRELOADER (3 segundos)
                    ============================================================ */
         .loader {
             position: fixed;
@@ -1856,7 +1856,10 @@
         .leaflet-popup-content strong {
             color: var(--gold-light);
         }
-    </style>
+    
+.ampm-toggle{display:flex;gap:6px}.ampm-toggle button{min-width:58px;padding:9px 14px;background:#ffffff06;border:1px solid var(--line);color:var(--muted);cursor:pointer;transition:var(--transition)}.ampm-toggle button.active,.ampm-toggle button:hover{background:rgba(198,161,91,.12);border-color:var(--gold);color:var(--gold)}.clock-presets button{min-width:64px}.clock-time-display{min-width:145px;text-align:center}
+
+</style>
 
     <!-- ============================================================
     JSON-LD
@@ -1923,7 +1926,7 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 120'><path d='M50 10 C25 10 10 30 10 55 C10 75 20 95 30 110 L70 110 C80 95 90 75 90 55 C90 30 75 10 50 10Z' fill='%23c6a15b' stroke='%23f2ddb0' stroke-width='2'/><path d='M30 50 L70 50 M35 65 L65 65 M40 80 L60 80' stroke='%230a0a0b' stroke-width='3' stroke-linecap='round'/></svg>">
 
     <!-- ============================================================
-    PRELOADER (2 segundos exactos)
+    PRELOADER (3 segundos exactos)
     ============================================================ -->
     <div class="loader" id="preloader">
         <div class="loader-content">
@@ -2223,6 +2226,10 @@
                         <span id="clockDisplay">12:00</span>
                         <span class="ampm" id="clockAmPm">AM</span>
                     </div>
+                    <div class="ampm-toggle" role="group" aria-label="Seleccione AM o PM">
+                        <button type="button" class="active" data-ampm="AM">AM</button>
+                        <button type="button" data-ampm="PM">PM</button>
+                    </div>
                     <div class="clock-presets">
                         <button data-hour="8" data-min="0">8:00</button>
                         <button data-hour="9" data-min="0">9:00</button>
@@ -2293,15 +2300,15 @@
 
     <script>
         // ============================================================
-        // PRELOADER (2 segundos exactos)
+        // PRELOADER (3 segundos exactos)
         // ============================================================
         (function() {
             const preloader = document.getElementById('preloader');
             const hide = () => preloader.classList.add('hide');
             // 2 segundos exactos para ver todo el preloader
-            setTimeout(hide, 2000);
+            setTimeout(hide, 3000);
             // Fallback por seguridad
-            setTimeout(hide, 4000);
+            setTimeout(hide, 5000);
         })();
 
         // ============================================================
@@ -2378,6 +2385,7 @@
             const minuteHand = document.getElementById('clockMinuteHand');
             const clockDisplay = document.getElementById('clockDisplay');
             const clockAmPm = document.getElementById('clockAmPm');
+            const ampmButtons = document.querySelectorAll('.ampm-toggle button');
 
             let currentStep = 1;
             const data = {
@@ -2449,11 +2457,21 @@
                 const displayHour = hour % 12 || 12;
                 clockDisplay.textContent = String(displayHour).padStart(2, '0') + ':' + String(minute).padStart(2, '0');
                 clockAmPm.textContent = ampm;
+                ampmButtons.forEach(b => b.classList.toggle('active', b.dataset.ampm === ampm));
                 data.ampm = ampm;
                 data.hour = hour;
                 data.minute = minute;
                 data.time = String(displayHour).padStart(2, '0') + ':' + String(minute).padStart(2, '0') + ' ' + ampm;
             }
+
+            ampmButtons.forEach(btn => btn.addEventListener('click', () => {
+                const target = btn.dataset.ampm;
+                let h = data.hour % 12 || 12;
+                if (target === 'PM' && h !== 12) h += 12;
+                if (target === 'AM' && h === 12) h = 0;
+                updateClock(h, data.minute);
+                ampmButtons.forEach(b => b.classList.toggle('active', b.dataset.ampm === target));
+            }));
 
             // Obtener hora del clic/touch en el reloj
             function getTimeFromEvent(clientX, clientY) {
@@ -2744,6 +2762,7 @@
                     timestamp: Date.now()
                 };
                 localStorage.setItem('admeAppointment', JSON.stringify(appointment));
+                localStorage.setItem('admeReminderRequested', 'true');
 
                 // Calcular hora exacta de la cita
                 const isAM = data.time.includes('AM');
@@ -2792,6 +2811,15 @@
                     notifyText.textContent = '📌 Recordatorio guardado en este dispositivo.';
                 }
             });
+
+            // Reprogramar recordatorios mientras la página permanezca abierta.
+            function checkScheduledReminder() {
+                const raw = localStorage.getItem('admeAppointment');
+                if (!raw || !('Notification' in window) || Notification.permission !== 'granted') return;
+                const a = JSON.parse(raw); const target = new Date(a.date + 'T' + (a.time.includes('PM') ? '15:00' : '09:00')).getTime();
+                [120,30].forEach(mins => { const key='admeNotified_'+mins+'_'+a.date+'_'+a.time; if(target-Date.now()<=mins*60000 && target-Date.now()>0 && !localStorage.getItem(key)){ new Notification('Adme Dental · Recordatorio',{body:mins===120?'Faltan dos horas para su solicitud.':'Falta media hora para su solicitud.'}); localStorage.setItem(key,'1'); }});
+            }
+            setInterval(checkScheduledReminder, 30000); checkScheduledReminder();
 
             modifySchedule.addEventListener('click', () => {
                 if (countdownInterval) clearInterval(countdownInterval);
