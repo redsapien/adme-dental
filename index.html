@@ -43,7 +43,7 @@
             --carbon: #1d1b1a;
             --gold: #c6a15b;
             --gold-light: #f2ddb0;
-            --gold-glow: rgba(198, 161, 91, 0.35);
+            --gold-glow: rgba(198, 161, 91, 0.4);
             --cream: #faf9f5;
             --muted: #b0aba1;
             --ink: #151516;
@@ -74,9 +74,9 @@
         }
 
         /* ============================================================
-                   FAVICON
+                   FAVICON (CSS + SVG inline)
                    ============================================================ */
-        link[rel="icon"] {
+        .favicon-svg {
             display: none;
         }
 
@@ -427,7 +427,6 @@
             font-size: 10px;
         }
 
-        /* Icono de consultorio avanzado (edificio + cruz + candado) */
         .nav-status .clinic-icon {
             width: 28px;
             height: 28px;
@@ -511,26 +510,59 @@
             box-shadow: 0 0 16px #dc626288;
         }
 
+        /* Botón Agendar mejorado */
         .nav-cta {
             font-size: 9px;
             letter-spacing: 0.16em;
             text-transform: uppercase;
             color: var(--gold);
             border: 1px solid var(--gold);
-            padding: 6px 14px;
+            padding: 8px 18px;
             background: transparent;
             cursor: pointer;
             transition: var(--transition);
             font-weight: 500;
+            position: relative;
+            overflow: hidden;
+            border-radius: 0;
+        }
+
+        .nav-cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gold);
+            transform: translateX(-100%);
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: -1;
+        }
+
+        .nav-cta:hover::before {
+            transform: translateX(0);
         }
 
         .nav-cta:hover {
-            background: var(--gold);
             color: var(--ink);
+            box-shadow: 0 0 30px rgba(198, 161, 91, 0.3);
+        }
+
+        .nav-cta::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border: 1px solid var(--gold);
+            opacity: 0;
+            transition: var(--transition);
+            pointer-events: none;
+        }
+
+        .nav-cta:hover::after {
+            opacity: 1;
+            box-shadow: 0 0 20px rgba(198, 161, 91, 0.15);
         }
 
         /* ============================================================
-                   HERO (efectos mejorados)
+                   HERO
                    ============================================================ */
         .hero {
             min-height: 100svh;
@@ -667,7 +699,7 @@
         }
 
         /* ============================================================
-                   SECTIONS (más limpias)
+                   SECTIONS
                    ============================================================ */
         .section {
             padding: 90px 22px;
@@ -710,7 +742,7 @@
         }
 
         /* ============================================================
-                   SERVICES (con imágenes mejoradas)
+                   SERVICES
                    ============================================================ */
         .services-grid {
             display: grid;
@@ -789,7 +821,138 @@
         }
 
         /* ============================================================
-                   REVIEW + MAP (integrado, más limpio)
+                   DOCTOR SECTION (NUEVA - ÚNICA)
+                   ============================================================ */
+        .doctor-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .doctor-image-wrap {
+            position: relative;
+            border: 1px solid var(--line);
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            background: radial-gradient(circle at 30% 30%, #1a1612, #0a0a0b);
+            display: grid;
+            place-items: center;
+            min-height: 380px;
+        }
+
+        .doctor-image-wrap .placeholder-icon {
+            font-size: 72px;
+            color: var(--gold);
+            opacity: 0.3;
+            animation: pulseQuestion 3s ease-in-out infinite;
+            font-family: 'Playfair Display', serif;
+            font-weight: 400;
+        }
+
+        @keyframes pulseQuestion {
+            0%,
+            100% {
+                opacity: 0.2;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.05);
+            }
+        }
+
+        .doctor-image-wrap .img-placeholder {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, rgba(198, 161, 91, 0.05), transparent 50%);
+        }
+
+        .doctor-image-wrap .img-placeholder .question-mark {
+            font-size: 80px;
+            color: var(--gold);
+            opacity: 0.15;
+            font-family: 'Playfair Display', serif;
+            animation: pulseQuestion 3s ease-in-out infinite;
+        }
+
+        .doctor-image-wrap .border-accent {
+            position: absolute;
+            inset: 12px;
+            border: 1px solid rgba(198, 161, 91, 0.1);
+            pointer-events: none;
+        }
+
+        .doctor-image-wrap .border-accent::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 30%;
+            width: 40%;
+            height: 2px;
+            background: var(--gold);
+            box-shadow: 0 0 20px var(--gold-glow);
+        }
+
+        .doctor-info {
+            padding: 8px 0;
+        }
+
+        .doctor-info .title {
+            font-size: 32px;
+            color: var(--cream);
+            margin-bottom: 4px;
+            font-weight: 400;
+        }
+
+        .doctor-info .subtitle {
+            font-size: 14px;
+            color: var(--gold-light);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .doctor-info .bio {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.8;
+            font-weight: 300;
+            margin-bottom: 16px;
+        }
+
+        .doctor-info .credentials {
+            display: grid;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .doctor-info .credentials .item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: var(--muted);
+            font-weight: 300;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .doctor-info .credentials .item .icon {
+            color: var(--gold);
+            font-size: 16px;
+            min-width: 24px;
+        }
+
+        .doctor-info .credentials .item strong {
+            color: var(--cream);
+            font-weight: 400;
+        }
+
+        /* ============================================================
+                   REVIEW + MAP
                    ============================================================ */
         .integrated-grid {
             display: grid;
@@ -867,13 +1030,25 @@
             background: #1a1a1c;
             border: 1px solid var(--line);
             overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .map-wrapper:hover {
+            border-color: var(--gold);
+            box-shadow: 0 0 30px rgba(198, 161, 91, 0.05);
         }
 
         #map {
             height: 100%;
             width: 100%;
             min-height: 300px;
-            filter: grayscale(0.85) contrast(1.05) brightness(0.65);
+            filter: grayscale(0.7) contrast(1.05) brightness(0.7);
+            transition: filter 0.6s ease;
+        }
+
+        .map-wrapper:hover #map {
+            filter: grayscale(0.4) contrast(1.05) brightness(0.8);
         }
 
         .map-overlay {
@@ -888,6 +1063,12 @@
             color: var(--cream);
             font-size: 11px;
             pointer-events: none;
+            transition: var(--transition);
+        }
+
+        .map-wrapper:hover .map-overlay {
+            border-color: var(--gold-light);
+            box-shadow: 0 0 25px rgba(198, 161, 91, 0.1);
         }
 
         .map-overlay strong {
@@ -903,7 +1084,7 @@
         }
 
         /* ============================================================
-                   CONTACT (más limpio)
+                   CONTACT
                    ============================================================ */
         .contact-grid {
             display: grid;
@@ -1101,7 +1282,7 @@
         }
 
         /* ============================================================
-                   MODAL (Fullscreen)
+                   MODAL (Fullscreen - 4 pasos)
                    ============================================================ */
         .modal-overlay {
             position: fixed;
@@ -1110,7 +1291,7 @@
             display: none;
             place-items: center;
             padding: 12px;
-            background: rgba(10, 10, 11, 0.95);
+            background: rgba(10, 10, 11, 0.96);
             backdrop-filter: blur(24px) saturate(1.1);
             overflow-y: auto;
         }
@@ -1121,30 +1302,36 @@
 
         .modal-card {
             width: 100%;
-            max-width: 780px;
-            min-height: 540px;
+            max-width: 720px;
+            min-height: 480px;
             background: linear-gradient(145deg, #1d1b1a, #121214);
             border: 1px solid var(--gold);
-            padding: clamp(28px, 5vw, 48px);
+            padding: clamp(28px, 5vw, 46px);
             position: relative;
             box-shadow: 0 50px 100px rgba(0, 0, 0, 0.7);
+            border-radius: 18px;
         }
 
         .modal-close {
             position: absolute;
             top: 14px;
             right: 18px;
+            width: 36px;
+            height: 36px;
+            border: 1px solid var(--line);
+            border-radius: 50%;
             background: none;
-            border: none;
             color: var(--muted);
-            font-size: 26px;
+            font-size: 20px;
             cursor: pointer;
             transition: var(--transition);
-            line-height: 1;
+            display: grid;
+            place-items: center;
         }
 
         .modal-close:hover {
             color: var(--cream);
+            border-color: var(--gold);
             transform: rotate(90deg);
         }
 
@@ -1159,7 +1346,7 @@
 
         .modal-progress .bar {
             height: 100%;
-            width: 20%;
+            width: 25%;
             background: linear-gradient(90deg, var(--gold), var(--gold-light));
             transition: width 0.5s ease;
         }
@@ -1174,15 +1361,15 @@
         }
 
         .step h2 {
-            font-size: clamp(28px, 4.5vw, 46px);
+            font-size: clamp(28px, 4vw, 42px);
             color: var(--cream);
-            margin: 6px 0 10px;
+            margin: 4px 0 8px;
             font-weight: 400;
         }
 
         .step p {
             color: var(--muted);
-            max-width: 420px;
+            max-width: 400px;
             font-size: 13px;
             line-height: 1.7;
             font-weight: 300;
@@ -1191,7 +1378,7 @@
         .field {
             display: grid;
             gap: 5px;
-            margin: 20px 0;
+            margin: 18px 0;
         }
 
         .field label {
@@ -1212,6 +1399,7 @@
             font-size: 15px;
             outline: none;
             transition: var(--transition);
+            border-radius: 10px;
         }
 
         .field input:focus,
@@ -1223,18 +1411,19 @@
         .options-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin: 20px 0;
+            gap: 9px;
+            margin: 16px 0;
         }
 
         .option-btn {
-            padding: 18px 16px;
+            padding: 16px 14px;
             text-align: left;
             background: rgba(255, 255, 255, 0.015);
             border: 1px solid var(--line);
             color: var(--cream);
             cursor: pointer;
             transition: var(--transition);
+            border-radius: 12px;
         }
 
         .option-btn:hover {
@@ -1266,30 +1455,36 @@
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
-            margin-top: 26px;
+            margin-top: 22px;
+        }
+
+        .modal-actions .btn {
+            border-radius: 999px;
+            padding: 12px 24px;
+            min-height: 46px;
         }
 
         /* ============================================================
-                   RELOJ ANALÓGICO (mejorado para móvil)
+                   RELOJ ANALÓGICO (mejorado)
                    ============================================================ */
         .clock-selector {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
-            margin: 20px 0;
+            gap: 16px;
+            margin: 14px 0;
         }
 
         .clock-face {
             position: relative;
-            width: min(220px, 70vw);
-            height: min(220px, 70vw);
-            max-width: 220px;
-            max-height: 220px;
+            width: min(210px, 70vw);
+            height: min(210px, 70vw);
+            max-width: 210px;
+            max-height: 210px;
             border-radius: 50%;
             border: 2px solid var(--gold);
             background: radial-gradient(circle, #1a1a1c, #0a0a0b);
-            box-shadow: 0 0 40px rgba(198, 161, 91, 0.04);
+            box-shadow: 0 0 0 8px rgba(198, 161, 91, 0.025), 0 18px 50px rgba(0, 0, 0, 0.35);
             touch-action: none;
             cursor: pointer;
             aspect-ratio: 1/1;
@@ -1363,13 +1558,15 @@
         }
 
         .clock-time-display {
-            font-size: clamp(22px, 5vw, 30px);
+            font-size: clamp(20px, 4vw, 28px);
             font-family: 'Playfair Display', serif;
             color: var(--gold-light);
             letter-spacing: 0.08em;
             background: rgba(0, 0, 0, 0.3);
-            padding: 6px 20px;
+            padding: 5px 18px;
             border: 1px solid var(--line);
+            text-align: center;
+            min-width: 130px;
         }
 
         .clock-time-display .ampm {
@@ -1379,22 +1576,49 @@
             font-family: 'Inter', sans-serif;
         }
 
+        .ampm-toggle {
+            display: flex;
+            gap: 6px;
+        }
+
+        .ampm-toggle button {
+            min-width: 54px;
+            padding: 8px 14px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--line);
+            color: var(--muted);
+            cursor: pointer;
+            transition: var(--transition);
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .ampm-toggle button.active,
+        .ampm-toggle button:hover {
+            background: rgba(198, 161, 91, 0.12);
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
         .clock-presets {
             display: flex;
-            gap: 8px;
+            gap: 7px;
             flex-wrap: wrap;
             justify-content: center;
         }
 
         .clock-presets button {
-            padding: 6px 14px;
+            padding: 5px 12px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--line);
             color: var(--cream);
-            font-size: 11px;
+            font-size: 10px;
             cursor: pointer;
             transition: var(--transition);
             font-weight: 300;
+            border-radius: 6px;
+            min-width: 52px;
         }
 
         .clock-presets button:hover,
@@ -1405,13 +1629,14 @@
         }
 
         /* ============================================================
-                   TICKET + COUNTDOWN
+                   TICKET + COUNTDOWN (mejorado)
                    ============================================================ */
         .ticket {
             padding: 24px 20px;
             border: 1px solid var(--gold);
             background: rgba(198, 161, 91, 0.03);
-            margin: 18px 0;
+            margin: 16px 0;
+            border-radius: 14px;
         }
 
         .ticket .header {
@@ -1436,6 +1661,11 @@
             font-weight: 300;
         }
 
+        .ticket .body .doctor-name {
+            color: var(--gold-light);
+            font-weight: 400;
+        }
+
         .ticket .status {
             display: inline-block;
             margin-top: 10px;
@@ -1445,6 +1675,7 @@
             letter-spacing: 0.16em;
             text-transform: uppercase;
             color: var(--gold);
+            border-radius: 20px;
         }
 
         .ticket .countdown {
@@ -1479,10 +1710,13 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-top: 16px;
+            margin-top: 14px;
             font-size: 11px;
             color: var(--muted);
             font-weight: 300;
+            border-radius: 999px;
+            padding: 8px 14px;
+            background: rgba(255, 255, 255, 0.02);
         }
 
         .notify-status .dot {
@@ -1591,6 +1825,16 @@
                 gap: 28px;
             }
 
+            .doctor-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .doctor-image-wrap {
+                min-height: 300px;
+                aspect-ratio: 4/3;
+            }
+
             .section-header {
                 flex-direction: column;
                 align-items: flex-start;
@@ -1612,15 +1856,15 @@
             }
 
             .clock-face {
-                width: min(200px, 65vw);
-                height: min(200px, 65vw);
-                max-width: 200px;
-                max-height: 200px;
+                width: min(190px, 65vw);
+                height: min(190px, 65vw);
+                max-width: 190px;
+                max-height: 190px;
             }
 
             .clock-time-display {
-                font-size: 20px;
-                padding: 4px 16px;
+                font-size: 18px;
+                padding: 4px 14px;
             }
 
             .ticket .countdown {
@@ -1689,7 +1933,7 @@
 
             .nav-cta {
                 font-size: 8px;
-                padding: 4px 10px;
+                padding: 6px 12px;
             }
 
             .hero {
@@ -1724,21 +1968,37 @@
                 font-size: 15px;
             }
 
+            .doctor-image-wrap {
+                min-height: 240px;
+            }
+
+            .doctor-info .title {
+                font-size: 26px;
+            }
+
             .clock-face {
-                width: min(170px, 60vw);
-                height: min(170px, 60vw);
-                max-width: 170px;
-                max-height: 170px;
+                width: min(160px, 60vw);
+                height: min(160px, 60vw);
+                max-width: 160px;
+                max-height: 160px;
             }
 
             .clock-time-display {
-                font-size: 17px;
+                font-size: 16px;
                 padding: 3px 12px;
+                min-width: 100px;
             }
 
             .clock-presets button {
                 padding: 4px 10px;
+                font-size: 9px;
+                min-width: 44px;
+            }
+
+            .ampm-toggle button {
+                padding: 6px 10px;
                 font-size: 10px;
+                min-width: 44px;
             }
 
             .modal-card {
@@ -1842,6 +2102,12 @@
             .sending-content .icon {
                 animation: none;
             }
+            .doctor-image-wrap .placeholder-icon {
+                animation: none;
+            }
+            .doctor-image-wrap .img-placeholder .question-mark {
+                animation: none;
+            }
         }
 
         /* ============================================================
@@ -1874,26 +2140,78 @@
         .leaflet-popup-content strong {
             color: var(--gold-light);
         }
-    
-.ampm-toggle{display:flex;gap:6px}.ampm-toggle button{min-width:58px;padding:9px 14px;background:#ffffff06;border:1px solid var(--line);color:var(--muted);cursor:pointer;transition:var(--transition)}.ampm-toggle button.active,.ampm-toggle button:hover{background:rgba(198,161,91,.12);border-color:var(--gold);color:var(--gold)}.clock-presets button{min-width:64px}.clock-time-display{min-width:145px;text-align:center}
 
+        /* ============================================================
+                   MEJORAS ADICIONALES
+                   ============================================================ */
+        .nav {
+            justify-content: flex-end;
+            padding: 16px clamp(16px, 4vw, 34px);
+            gap: 18px;
+        }
 
-/* Refinamiento visual: navegación y agenda más limpia */
-.nav{justify-content:flex-end;padding:16px clamp(16px,4vw,34px);gap:18px}
-.nav-status{margin-left:auto}
-.modal-overlay{padding:clamp(10px,3vw,28px);background:rgba(7,7,8,.97)}
-.modal-card{max-width:680px;min-height:0;max-height:calc(100dvh - 28px);overflow-y:auto;border-color:rgba(198,161,91,.55);border-radius:18px;padding:clamp(24px,5vw,46px);box-shadow:0 28px 90px rgba(0,0,0,.62),inset 0 1px 0 rgba(255,255,255,.04)}
-.modal-close{top:16px;right:20px;width:36px;height:36px;border:1px solid var(--line);border-radius:50%;font-size:22px;display:grid;place-items:center}
-.step h2{font-size:clamp(26px,4vw,40px);letter-spacing:-.02em}
-.step p{line-height:1.55;margin-bottom:12px}
-.field{margin:16px 0}.field input,.field select{border-radius:10px;padding:14px 15px;background:rgba(255,255,255,.045)}
-.options-grid{gap:9px;margin:16px 0}.option-btn{border-radius:12px;padding:15px 14px}.option-btn small{line-height:1.4}
-.modal-actions{margin-top:20px}.modal-actions .btn{border-radius:999px;padding:12px 20px}
-.clock-selector{gap:14px;margin:14px 0}.clock-face{box-shadow:0 0 0 8px rgba(198,161,91,.025),0 18px 50px rgba(0,0,0,.35)}
-.ticket{border-radius:14px}.notify-status{border-radius:999px;padding:9px 12px;background:rgba(255,255,255,.025)}
-@media(max-width:520px){.nav{padding:12px 14px}.nav-status{gap:7px;font-size:9px}.nav-cta{padding:10px 14px}.modal-card{max-height:calc(100dvh - 16px);border-radius:14px;padding:24px 18px}.options-grid{grid-template-columns:1fr}.clock-face{width:min(200px,68vw);height:min(200px,68vw)}}
+        .nav-status {
+            margin-left: auto;
+        }
 
-</style>
+        .modal-overlay {
+            padding: clamp(10px, 3vw, 28px);
+        }
+
+        .modal-card {
+            max-height: calc(100dvh - 28px);
+            overflow-y: auto;
+            border-color: rgba(198, 161, 91, 0.55);
+        }
+
+        .step p {
+            margin-bottom: 10px;
+        }
+
+        .field {
+            margin: 14px 0;
+        }
+
+        .clock-selector {
+            gap: 12px;
+            margin: 12px 0;
+        }
+
+        .ticket {
+            border-radius: 14px;
+        }
+
+        .notify-status {
+            border-radius: 999px;
+            padding: 8px 14px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        @media (max-width: 520px) {
+            .nav {
+                padding: 10px 12px;
+            }
+            .nav-status {
+                gap: 6px;
+                font-size: 9px;
+            }
+            .nav-cta {
+                padding: 8px 12px;
+                font-size: 8px;
+            }
+            .modal-card {
+                max-height: calc(100dvh - 16px);
+                padding: 20px 14px;
+            }
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            .clock-face {
+                width: min(180px, 65vw);
+                height: min(180px, 65vw);
+            }
+        }
+    </style>
 
     <!-- ============================================================
     JSON-LD
@@ -1955,8 +2273,14 @@
 <body>
 
     <!-- ============================================================
-    FAVICON
+    FAVICON (SVG inline para CSS/JS)
     ============================================================ -->
+    <svg class="favicon-svg" xmlns="http://www.w3.org/2000/svg">
+        <symbol id="favicon-tooth" viewBox="0 0 100 120">
+            <path d="M50 10 C25 10 10 30 10 55 C10 75 20 95 30 110 L70 110 C80 95 90 75 90 55 C90 30 75 10 50 10Z" fill="#c6a15b" stroke="#f2ddb0" stroke-width="2"/>
+            <path d="M30 50 L70 50 M35 65 L65 65 M40 80 L60 80" stroke="#0a0a0b" stroke-width="3" stroke-linecap="round"/>
+        </symbol>
+    </svg>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 120'><path d='M50 10 C25 10 10 30 10 55 C10 75 20 95 30 110 L70 110 C80 95 90 75 90 55 C90 30 75 10 50 10Z' fill='%23c6a15b' stroke='%23f2ddb0' stroke-width='2'/><path d='M30 50 L70 50 M35 65 L65 65 M40 80 L60 80' stroke='%230a0a0b' stroke-width='3' stroke-linecap='round'/></svg>">
 
     <!-- ============================================================
@@ -1982,12 +2306,11 @@
     </div>
 
     <!-- ============================================================
-    NAVIGATION (limpia, sin logo)
+    NAVIGATION
     ============================================================ -->
     <header class="nav">
         <div class="nav-status" id="clinicStatus">
             <span class="clinic-icon">
-                <!-- Icono de consultorio avanzado: edificio + cruz + candado -->
                 <svg viewBox="0 0 24 24">
                     <rect x="4" y="8" width="16" height="13" rx="2" />
                     <path d="M8 21V15a2 2 0 012-2h4a2 2 0 012 2v6" />
@@ -2051,7 +2374,7 @@
     </section>
 
     <!-- ============================================================
-    SECTION: SERVICIOS (con imágenes mejoradas)
+    SECTION: SERVICIOS
     ============================================================ -->
     <section class="section section-carbon" id="servicios">
         <div class="container">
@@ -2063,7 +2386,7 @@
             <div class="services-grid reveal">
                 <article class="service-card">
                     <div class="image-wrap">
-                        <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=600&h=400&fit=crop&crop=center&auto=format" alt="Valoración odontológica" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=600&h=400&fit=crop&crop=center&auto=format';">
+                        <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=600&h=400&fit=crop&crop=center&auto=format" alt="Valoración odontológica" loading="lazy">
                         <div class="overlay"></div>
                     </div>
                     <div class="content">
@@ -2075,7 +2398,7 @@
 
                 <article class="service-card">
                     <div class="image-wrap">
-                        <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=600&h=400&fit=crop&crop=center&auto=format" alt="Odontología general" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=600&h=400&fit=crop&crop=center&auto=format';">
+                        <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=600&h=400&fit=crop&crop=center&auto=format" alt="Odontología general" loading="lazy">
                         <div class="overlay"></div>
                     </div>
                     <div class="content">
@@ -2087,7 +2410,7 @@
 
                 <article class="service-card">
                     <div class="image-wrap">
-                        <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=600&h=400&fit=crop&crop=center&auto=format" alt="Odontología estética" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=600&h=400&fit=crop&crop=center&auto=format';">
+                        <img src="https://images.unsplash.com/photo-1588776814546-da8c6ef2d15b?w=600&h=400&fit=crop&crop=center&auto=format" alt="Odontología estética" loading="lazy">
                         <div class="overlay"></div>
                     </div>
                     <div class="content">
@@ -2101,9 +2424,62 @@
     </section>
 
     <!-- ============================================================
-    SECTION: RESEÑA + MAPA (integrados, más limpios)
+    SECTION: DOCTOR (NUEVA - ÚNICA CON FOTO ANIMADA)
     ============================================================ -->
-    <section class="section section-dark" id="visita">
+    <section class="section section-dark" id="doctor">
+        <div class="container">
+            <div class="section-header">
+                <h2>Conozca al<br><span class="highlight">Dr. Adrián.</span></h2>
+                <p>Un profesional que escucha, orienta y cuida su sonrisa como propia.</p>
+            </div>
+
+            <div class="doctor-grid reveal">
+                <div class="doctor-image-wrap">
+                    <div class="img-placeholder">
+                        <span class="question-mark">?</span>
+                    </div>
+                    <div class="border-accent"></div>
+                    <!--
+                        RUTA PARA IMAGEN REAL DEL DOCTOR:
+                        Reemplazar el div .img-placeholder por:
+                        <img src="assets/doctor-adrian-giraldo.jpg" alt="Dr. Adrián Giraldo Mejía" style="width:100%;height:100%;object-fit:cover;">
+                    -->
+                </div>
+                <div class="doctor-info">
+                    <h3 class="title">Dr. Adrián Giraldo Mejía</h3>
+                    <div class="subtitle">Odontología General y Estética</div>
+                    <p class="bio">
+                        El Dr. Adrián Giraldo Mejía es un odontólogo apasionado por el cuidado integral de la sonrisa.
+                        Su enfoque combina la precisión clínica con una atención cercana y humana, creando experiencias
+                        que van más allá del tratamiento dental.
+                    </p>
+                    <div class="credentials">
+                        <div class="item">
+                            <span class="icon">🦷</span>
+                            <span><strong>Odontólogo</strong> · Universidad de Manizales</span>
+                        </div>
+                        <div class="item">
+                            <span class="icon">⭐</span>
+                            <span><strong>Especialista en Estética Dental</strong> · Formación avanzada</span>
+                        </div>
+                        <div class="item">
+                            <span class="icon">❤️</span>
+                            <span><strong>Filosofía:</strong> “No solo cuidamos dientes, cuidamos personas.”</span>
+                        </div>
+                        <div class="item">
+                            <span class="icon">📍</span>
+                            <span><strong>Manizales</strong> · Sector Las Palmas</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    SECTION: RESEÑA + MAPA
+    ============================================================ -->
+    <section class="section section-carbon" id="visita">
         <div class="container">
             <div class="section-header">
                 <h2>Su cita<br><span class="highlight">empieza aquí.</span></h2>
@@ -2124,7 +2500,7 @@
                     </div>
                 </div>
 
-                <div class="map-wrapper">
+                <div class="map-wrapper" id="mapWrapper">
                     <div id="map"></div>
                     <div class="map-overlay">
                         <strong>Adme Dental</strong>
@@ -2138,7 +2514,7 @@
     <!-- ============================================================
     SECTION: CONTACTO
     ============================================================ -->
-    <section class="section section-carbon" id="contacto">
+    <section class="section section-dark" id="contacto">
         <div class="container">
             <div class="contact-grid">
                 <div class="contact-info">
@@ -2203,19 +2579,19 @@
     </div>
 
     <!-- ============================================================
-    MODAL DE AGENDA
+    MODAL DE AGENDA (4 pasos)
     ============================================================ -->
     <div class="modal-overlay" id="modal">
         <div class="modal-card">
             <button class="modal-close" data-close-modal>✕</button>
 
             <div class="modal-progress">
-                <div class="bar" id="progressBar" style="width:20%"></div>
+                <div class="bar" id="progressBar" style="width:25%"></div>
             </div>
 
             <!-- STEP 1: Nombre -->
             <div class="step active" data-step="1">
-                <span class="eyebrow">Paso 1 de 5</span>
+                <span class="eyebrow">Paso 1 de 4</span>
                 <h2>¿Cómo le llamamos?</h2>
                 <p>Queremos recibirle como se merece.</p>
                 <div class="field">
@@ -2229,7 +2605,7 @@
 
             <!-- STEP 2: Motivo -->
             <div class="step" data-step="2">
-                <span class="eyebrow">Paso 2 de 5</span>
+                <span class="eyebrow">Paso 2 de 4</span>
                 <h2>¿Qué necesita?</h2>
                 <p>Cuéntenos qué le trae a consulta.</p>
                 <div class="options-grid" id="serviceOptions">
@@ -2242,7 +2618,7 @@
 
             <!-- STEP 3: Fecha + Reloj mejorado -->
             <div class="step" data-step="3">
-                <span class="eyebrow">Paso 3 de 5</span>
+                <span class="eyebrow">Paso 3 de 4</span>
                 <h2>¿Qué día y hora?</h2>
                 <p>Elija el momento que mejor le funcione.</p>
                 <div class="field">
@@ -2280,9 +2656,9 @@
                 </div>
             </div>
 
-            <!-- STEP 4: Resumen -->
+            <!-- STEP 4: Resumen + Envío -->
             <div class="step" data-step="4">
-                <span class="eyebrow">Paso 4 de 5</span>
+                <span class="eyebrow">Paso 4 de 4</span>
                 <h2>Revise su solicitud.</h2>
                 <p id="summaryText">Confirme sus datos antes de continuar.</p>
                 <div class="modal-actions">
@@ -2291,7 +2667,7 @@
                 </div>
             </div>
 
-            <!-- STEP 5: Ticket + Countdown -->
+            <!-- STEP 5: Ticket (se muestra después de enviar) -->
             <div class="step" data-step="5">
                 <span class="eyebrow">Solicitud confirmada</span>
                 <h2>Su cita está en proceso.</h2>
@@ -2338,14 +2714,12 @@
         (function() {
             const preloader = document.getElementById('preloader');
             const hide = () => preloader.classList.add('hide');
-            // 2 segundos exactos para ver todo el preloader
             setTimeout(hide, 3000);
-            // Fallback por seguridad
             setTimeout(hide, 5000);
         })();
 
         // ============================================================
-        // CLINIC STATUS (con icono de consultorio avanzado)
+        // CLINIC STATUS
         // ============================================================
         (function() {
             const statusEl = document.getElementById('clinicStatus');
@@ -2389,7 +2763,7 @@
         })();
 
         // ============================================================
-        // MODAL + RELOJ ANALÓGICO (mejorado para móvil)
+        // MODAL + RELOJ ANALÓGICO (4 pasos)
         // ============================================================
         (function() {
             const modal = document.getElementById('modal');
@@ -2435,7 +2809,6 @@
             // Generar marcadores del reloj
             function buildClockMarkers() {
                 const face = clockFace;
-                // Limpiar marcadores existentes (excepto los hands y center dot)
                 const toRemove = face.querySelectorAll('.marker, .num-label');
                 toRemove.forEach(el => el.remove());
 
@@ -2459,7 +2832,6 @@
                     marker.style.transformOrigin = 'bottom center';
                     face.appendChild(marker);
                 }
-                // Números
                 for (let i = 1; i <= 12; i++) {
                     const angle = (i / 12) * 360 - 90;
                     const rad = angle * Math.PI / 180;
@@ -2479,7 +2851,6 @@
                 }
             }
 
-            // Actualizar manecillas
             function updateClock(hour, minute) {
                 const h = hour % 12 || 12;
                 const hAngle = (h / 12) * 360 + (minute / 60) * 30 - 90;
@@ -2506,7 +2877,6 @@
                 ampmButtons.forEach(b => b.classList.toggle('active', b.dataset.ampm === target));
             }));
 
-            // Obtener hora del clic/touch en el reloj
             function getTimeFromEvent(clientX, clientY) {
                 const rect = clockFace.getBoundingClientRect();
                 const cx = rect.left + rect.width / 2;
@@ -2521,7 +2891,7 @@
                 return { hour, minute };
             }
 
-            // Eventos del reloj (mouse)
+            // Mouse events
             clockFace.addEventListener('mousedown', (e) => {
                 isDragging = true;
                 const { hour, minute } = getTimeFromEvent(e.clientX, e.clientY);
@@ -2538,7 +2908,7 @@
 
             document.addEventListener('mouseup', () => { isDragging = false; });
 
-            // Eventos del reloj (touch - mejorado para móvil)
+            // Touch events
             clockFace.addEventListener('touchstart', (e) => {
                 e.preventDefault();
                 const touch = e.touches[0];
@@ -2572,7 +2942,6 @@
                 });
             });
 
-            // Inicializar reloj
             buildClockMarkers();
             updateClock(9, 0);
 
@@ -2606,6 +2975,10 @@
                 setTimeout(() => nameInput.focus(), 100);
                 updateClock(9, 0);
                 document.querySelectorAll('.clock-presets button').forEach(b => b.classList.remove('active'));
+                // Ocultar step 5 si estaba visible
+                if (document.querySelector('.step[data-step="5"]')) {
+                    document.querySelector('.step[data-step="5"]').classList.remove('active');
+                }
             }
 
             function closeModal() {
@@ -2615,11 +2988,14 @@
             }
 
             function renderStep() {
-                steps.forEach((step, idx) => {
-                    step.classList.toggle('active', idx + 1 === currentStep);
-                });
                 const totalSteps = 5;
-                progressBar.style.width = (currentStep / totalSteps * 100) + '%';
+                steps.forEach((step, idx) => {
+                    const stepNum = idx + 1;
+                    step.classList.toggle('active', stepNum === currentStep);
+                });
+                // El progreso solo va hasta 4 pasos (el 5 es ticket)
+                const progressStep = currentStep <= 4 ? currentStep : 4;
+                progressBar.style.width = (progressStep / 4 * 100) + '%';
 
                 if (currentStep === 4) {
                     summaryText.textContent =
@@ -2627,8 +3003,8 @@
                 }
                 if (currentStep === 5) {
                     ticketTitle.textContent = data.service || 'Su consulta';
-                    ticketBody.textContent =
-                        `${data.name} · ${data.service} · ${data.date} · ${data.time}`;
+                    ticketBody.innerHTML =
+                        `${data.name} · ${data.service} · ${data.date} · ${data.time}<br><span class="doctor-name">Dr. Adrián Giraldo Mejía</span>`;
                     startCountdown();
                 }
             }
@@ -2780,7 +3156,7 @@
             }
 
             // ============================================================
-            // REMINDER + NOTIFICATIONS (2 horas antes exactas)
+            // REMINDER + NOTIFICATIONS (funcionales)
             // ============================================================
             createReminder.addEventListener('click', async () => {
                 if ('Notification' in window && Notification.permission === 'default') {
@@ -2797,7 +3173,6 @@
                 localStorage.setItem('admeAppointment', JSON.stringify(appointment));
                 localStorage.setItem('admeReminderRequested', 'true');
 
-                // Calcular hora exacta de la cita
                 const isAM = data.time.includes('AM');
                 const hourStr = data.time.split(':')[0];
                 let hourNum = parseInt(hourStr);
@@ -2845,14 +3220,36 @@
                 }
             });
 
-            // Reprogramar recordatorios mientras la página permanezca abierta.
+            // Reprogramar recordatorios desde localStorage
             function checkScheduledReminder() {
                 const raw = localStorage.getItem('admeAppointment');
                 if (!raw || !('Notification' in window) || Notification.permission !== 'granted') return;
-                const a = JSON.parse(raw); const target = new Date(a.date + 'T' + (a.time.includes('PM') ? '15:00' : '09:00')).getTime();
-                [120,30].forEach(mins => { const key='admeNotified_'+mins+'_'+a.date+'_'+a.time; if(target-Date.now()<=mins*60000 && target-Date.now()>0 && !localStorage.getItem(key)){ new Notification('Adme Dental · Recordatorio',{body:mins===120?'Faltan dos horas para su solicitud.':'Falta media hora para su solicitud.'}); localStorage.setItem(key,'1'); }});
+                try {
+                    const a = JSON.parse(raw);
+                    const isAM = a.time.includes('AM');
+                    const hourStr = a.time.split(':')[0];
+                    let hourNum = parseInt(hourStr);
+                    if (!isAM && hourNum !== 12) hourNum += 12;
+                    if (isAM && hourNum === 12) hourNum = 0;
+                    const minuteNum = parseInt(a.time.split(':')[1].split(' ')[0]);
+                    const targetTime = new Date(a.date + 'T' + String(hourNum).padStart(2, '0') + ':' + String(minuteNum)
+                        .padStart(2, '0') + ':00').getTime();
+                    [120, 30].forEach(mins => {
+                        const key = 'admeNotified_' + mins + '_' + a.date + '_' + a.time;
+                        const notifTime = targetTime - mins * 60000;
+                        if (notifTime - Date.now() <= 60000 && notifTime - Date.now() > 0 && !localStorage
+                            .getItem(key)) {
+                            new Notification('Adme Dental · Recordatorio', {
+                                body: mins === 120 ? 'Faltan dos horas para su solicitud.' :
+                                    'Falta media hora para su solicitud.'
+                            });
+                            localStorage.setItem(key, '1');
+                        }
+                    });
+                } catch (e) {}
             }
-            setInterval(checkScheduledReminder, 30000); checkScheduledReminder();
+            setInterval(checkScheduledReminder, 30000);
+            checkScheduledReminder();
 
             modifySchedule.addEventListener('click', () => {
                 if (countdownInterval) clearInterval(countdownInterval);
@@ -2897,7 +3294,7 @@
         })();
 
         // ============================================================
-        // MAP (LEAFLET)
+        // MAP (LEAFLET) - Mejorado con clic para abrir ruta
         // ============================================================
         (function() {
             function initMap() {
@@ -2906,9 +3303,11 @@
                     return;
                 }
                 const container = document.getElementById('map');
+                const wrapper = document.getElementById('mapWrapper');
                 if (!container) return;
 
                 const coords = [5.0609347, -75.490313];
+                const urlMaps = 'https://www.google.com/maps/dir/?api=1&destination=' + coords[0] + ',' + coords[1];
 
                 const map = L.map('map', {
                     scrollWheelZoom: false,
@@ -2924,15 +3323,25 @@
 
                 const icon = L.divIcon({
                     className: 'custom-marker',
-                    html: `<div style="width:20px;height:20px;border-radius:50%;background:#c6a15b;border:3px solid #0a0a0b;box-shadow:0 0 0 6px rgba(198,161,91,0.2),0 0 35px rgba(198,161,91,0.12);"></div>`,
-                    iconSize: [20, 20],
-                    iconAnchor: [10, 10]
+                    html: `<div style="width:24px;height:24px;border-radius:50%;background:#c6a15b;border:3px solid #0a0a0b;box-shadow:0 0 0 8px rgba(198,161,91,0.15),0 0 40px rgba(198,161,91,0.12);transition:all 0.3s ease;"></div>`,
+                    iconSize: [24, 24],
+                    iconAnchor: [12, 12]
                 });
 
-                L.marker(coords, { icon })
+                const marker = L.marker(coords, { icon })
                     .addTo(map)
                     .bindPopup('<strong>Adme Dental</strong><br>Calle 58 #23-08<br>Las Palmas, Manizales')
                     .openPopup();
+
+                // Clic en el mapa o wrapper abre la ruta
+                wrapper.addEventListener('click', () => {
+                    window.open(urlMaps, '_blank');
+                });
+
+                // También el marcador
+                marker.on('click', () => {
+                    window.open(urlMaps, '_blank');
+                });
 
                 setTimeout(() => map.invalidateSize(), 400);
             }
@@ -2946,7 +3355,7 @@
         })();
 
         // ============================================================
-        // SCROLL PARALLAX Y MEJORAS VISUALES
+        // SCROLL PARALLAX
         // ============================================================
         window.addEventListener('scroll', () => {
             const hero = document.querySelector('.hero');
@@ -2960,7 +3369,7 @@
             }
         });
 
-        // Focus visible para accesibilidad
+        // Focus visible
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Tab') {
                 document.body.classList.add('keyboard-nav');
@@ -2970,9 +3379,10 @@
             document.body.classList.remove('keyboard-nav');
         });
 
-        console.log('🦷 Adme Dental · Web Premium v3.0');
+        console.log('🦷 Adme Dental · Web Premium v4.0');
         console.log('✨ Desarrollado con pasión por Red Sapien');
-        console.log('⏱️ Preloader 2s · Reloj interactivo · Notificaciones 2h antes');
+        console.log('⏱️ Preloader 3s · 4 pasos · Notificaciones 2h antes');
+        console.log('👨‍⚕️ Dr. Adrián Giraldo Mejía · Odontología General y Estética');
     </script>
 
 </body>
