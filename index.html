@@ -841,43 +841,6 @@
             min-height: 380px;
         }
 
-        .doctor-image-wrap .placeholder-icon {
-            font-size: 72px;
-            color: var(--gold);
-            opacity: 0.3;
-            animation: pulseQuestion 3s ease-in-out infinite;
-            font-family: 'Playfair Display', serif;
-            font-weight: 400;
-        }
-
-        @keyframes pulseQuestion {
-            0%,
-            100% {
-                opacity: 0.2;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 0.5;
-                transform: scale(1.05);
-            }
-        }
-
-        .doctor-image-wrap .img-placeholder {
-            position: absolute;
-            inset: 0;
-            display: grid;
-            place-items: center;
-            background: linear-gradient(135deg, rgba(198, 161, 91, 0.05), transparent 50%);
-        }
-
-        .doctor-image-wrap .img-placeholder .question-mark {
-            font-size: 80px;
-            color: var(--gold);
-            opacity: 0.15;
-            font-family: 'Playfair Display', serif;
-            animation: pulseQuestion 3s ease-in-out infinite;
-        }
-
         .doctor-image-wrap .border-accent {
             position: absolute;
             inset: 12px;
@@ -1830,11 +1793,6 @@
                 gap: 24px;
             }
 
-            .doctor-image-wrap {
-                min-height: 300px;
-                aspect-ratio: 4/3;
-            }
-
             .section-header {
                 flex-direction: column;
                 align-items: flex-start;
@@ -2215,6 +2173,10 @@
 /* Servicios sin fotografías: tarjetas ligeras y rápidas */
 .services-grid{grid-template-columns:repeat(3,1fr);gap:14px}.service-card{min-height:214px;border-radius:16px;background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.012));overflow:visible}.service-card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 18px 45px rgba(0,0,0,.28)}.service-card .image-wrap{display:none}.service-card .content{padding:20px 18px 22px}.service-icon{height:38px;width:38px;display:grid;place-items:center;border:1px solid rgba(198,161,91,.55);border-radius:50%;color:var(--gold-light);font-size:20px;margin-bottom:18px}.service-card h3{font-size:19px;margin:7px 0 8px}.service-card p{font-size:12px;line-height:1.55}.service-card.urgent{border-color:rgba(198,161,91,.4)}.offer-strip{display:flex;align-items:center;gap:14px;margin:0 0 22px;padding:14px 16px;border:1px solid rgba(198,161,91,.45);border-radius:14px;background:linear-gradient(90deg,rgba(198,161,91,.12),rgba(255,255,255,.025))}.offer-mark{font:400 28px 'Playfair Display',serif;color:var(--gold-light)}.offer-strip div{flex:1}.offer-strip strong,.offer-strip small{display:block}.offer-strip strong{font-size:13px;color:var(--cream)}.offer-strip small{font-size:11px;color:var(--muted);margin-top:3px}.offer-strip .btn{white-space:nowrap;padding:10px 16px;border-radius:999px}@media(max-width:800px){.services-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){.services-grid{grid-template-columns:1fr}.offer-strip{align-items:flex-start}.offer-strip .btn{padding:9px 12px;font-size:10px}}
 
+
+/* Bloque del profesional sin fotografía */
+.doctor-presence{min-height:380px;border:1px solid rgba(198,161,91,.45);border-radius:18px;padding:clamp(26px,5vw,52px);display:flex;flex-direction:column;justify-content:center;background:radial-gradient(circle at 15% 20%,rgba(198,161,91,.13),transparent 42%),linear-gradient(145deg,#1d1b1a,#0d0d0f);position:relative;overflow:hidden}.doctor-presence:after{content:'AD';position:absolute;right:-10px;bottom:-34px;font:400 180px/.8 'Playfair Display',serif;color:rgba(198,161,91,.045);pointer-events:none}.presence-kicker{font-size:10px;letter-spacing:.28em;color:var(--gold-light)}.presence-line{width:64px;height:1px;background:var(--gold);margin:24px 0}.presence-quote{max-width:360px;font:400 clamp(24px,4vw,38px)/1.15 'Playfair Display',serif;color:var(--cream);margin:0 0 32px}.presence-meta{display:grid;gap:5px;margin-bottom:24px}.presence-meta span{font-size:15px;color:var(--cream)}.presence-meta small{font-size:11px;color:var(--gold-light);letter-spacing:.08em}.doctor-presence .btn{align-self:flex-start;border-radius:999px}.doctor-image-wrap{display:none!important}@media(max-width:700px){.doctor-presence{min-height:280px}.presence-quote{font-size:29px}}
+
 </style>
 
     <!-- ============================================================
@@ -2272,6 +2234,7 @@
             }]
         }
     </script>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2NCA2NCc+PHJlY3Qgd2lkdGg9JzY0JyBoZWlnaHQ9JzY0JyByeD0nMTYnIGZpbGw9JyMwYTBhMGInLz48Y2lyY2xlIGN4PSczMicgY3k9JzMyJyByPScyMycgZmlsbD0nbm9uZScgc3Ryb2tlPScjYzZhMTViJyBzdHJva2Utd2lkdGg9JzInLz48cGF0aCBkPSdNMjEgMjVjMi03IDctMTAgMTEtMTBzOSAzIDExIDEwYzIgOC0xIDE1LTQgMjFIMjVjLTMtNi02LTEzLTQtMjFaJyBmaWxsPSdub25lJyBzdHJva2U9JyNmMmRkYjAnIHN0cm9rZS13aWR0aD0nMicvPjxwYXRoIGQ9J00yNSAyOWgxNE0yNyAzNWgxME0yOSA0MWg2JyBzdHJva2U9JyNjNmExNWInIHN0cm9rZS13aWR0aD0nMicgc3Ryb2tlLWxpbmVjYXA9J3JvdW5kJy8+PC9zdmc+">
 </head>
 
 <body>
@@ -2284,8 +2247,7 @@
             <path d="M50 10 C25 10 10 30 10 55 C10 75 20 95 30 110 L70 110 C80 95 90 75 90 55 C90 30 75 10 50 10Z" fill="#c6a15b" stroke="#f2ddb0" stroke-width="2"/>
             <path d="M30 50 L70 50 M35 65 L65 65 M40 80 L60 80" stroke="#0a0a0b" stroke-width="3" stroke-linecap="round"/>
         </symbol>
-    </svg>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 120'><path d='M50 10 C25 10 10 30 10 55 C10 75 20 95 30 110 L70 110 C80 95 90 75 90 55 C90 30 75 10 50 10Z' fill='%23c6a15b' stroke='%23f2ddb0' stroke-width='2'/><path d='M30 50 L70 50 M35 65 L65 65 M40 80 L60 80' stroke='%230a0a0b' stroke-width='3' stroke-linecap='round'/></svg>">
+    </svg><path d='M50 10 C25 10 10 30 10 55 C10 75 20 95 30 110 L70 110 C80 95 90 75 90 55 C90 30 75 10 50 10Z' fill='%23c6a15b' stroke='%23f2ddb0' stroke-width='2'/><path d='M30 50 L70 50 M35 65 L65 65 M40 80 L60 80' stroke='%230a0a0b' stroke-width='3' stroke-linecap='round'/></svg>">
 
     <!-- ============================================================
     PRELOADER (3 segundos exactos)
@@ -2397,7 +2359,7 @@
                 <article class="service-card"><div class="service-icon">⌁</div><div class="content"><span class="number">06 · Tratamiento</span><h3>Endodoncia</h3><p>Orientación y atención para conservar sus piezas dentales.</p></div></article>
                 <article class="service-card"><div class="service-icon">◇</div><div class="content"><span class="number">07 · Encías</span><h3>Periodoncia</h3><p>Valoración y cuidado especializado de sus encías.</p></div></article>
                 <article class="service-card"><div class="service-icon">⌬</div><div class="content"><span class="number">08 · Corrección</span><h3>Ortodoncia</h3><p>Converse sobre alternativas para alinear y cuidar su sonrisa.</p></div></article>
-                <article class="service-card urgent"><div class="service-icon">!</div><div class="content"><span class="number">09 · Atención</span><h3>Urgencias dentales</h3><p>Escríbanos para revisar su caso y conocer la disponibilidad.</p></div></article>
+                <article class="service-card urgent"><div class="service-icon">✧</div><div class="content"><span class="number">09 · Atención</span><h3>Urgencias dentales</h3><p>Escríbanos para revisar su caso y conocer la disponibilidad.</p></div></article>
             </div>
         </div>
     </section>
@@ -2413,16 +2375,12 @@
             </div>
 
             <div class="doctor-grid reveal">
-                <div class="doctor-image-wrap">
-                    <div class="img-placeholder">
-                        <span class="question-mark">?</span>
-                    </div>
-                    <div class="border-accent"></div>
-                    <!--
-                        RUTA PARA IMAGEN REAL DEL DOCTOR:
-                        Reemplazar el div .img-placeholder por:
-                        
-                    -->
+                <div class="doctor-presence">
+                    <span class="presence-kicker">ADME DENTAL</span>
+                    <div class="presence-line"></div>
+                    <p class="presence-quote">“Cuidar su sonrisa también es cuidar cómo se siente.”</p>
+                    <div class="presence-meta"><span>Dr. Adrián Giraldo Mejía</span><small>Odontología General y Estética</small></div>
+                    <button class="btn btn-ghost" data-open-modal>Conocer atención</button>
                 </div>
                 <div class="doctor-info">
                     <h3 class="title">Dr. Adrián Giraldo Mejía</h3>
