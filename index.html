@@ -2211,7 +2211,11 @@
                 height: min(180px, 65vw);
             }
         }
-    </style>
+    
+/* Servicios sin fotografías: tarjetas ligeras y rápidas */
+.services-grid{grid-template-columns:repeat(3,1fr);gap:14px}.service-card{min-height:214px;border-radius:16px;background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.012));overflow:visible}.service-card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 18px 45px rgba(0,0,0,.28)}.service-card .image-wrap{display:none}.service-card .content{padding:20px 18px 22px}.service-icon{height:38px;width:38px;display:grid;place-items:center;border:1px solid rgba(198,161,91,.55);border-radius:50%;color:var(--gold-light);font-size:20px;margin-bottom:18px}.service-card h3{font-size:19px;margin:7px 0 8px}.service-card p{font-size:12px;line-height:1.55}.service-card.urgent{border-color:rgba(198,161,91,.4)}.offer-strip{display:flex;align-items:center;gap:14px;margin:0 0 22px;padding:14px 16px;border:1px solid rgba(198,161,91,.45);border-radius:14px;background:linear-gradient(90deg,rgba(198,161,91,.12),rgba(255,255,255,.025))}.offer-mark{font:400 28px 'Playfair Display',serif;color:var(--gold-light)}.offer-strip div{flex:1}.offer-strip strong,.offer-strip small{display:block}.offer-strip strong{font-size:13px;color:var(--cream)}.offer-strip small{font-size:11px;color:var(--muted);margin-top:3px}.offer-strip .btn{white-space:nowrap;padding:10px 16px;border-radius:999px}@media(max-width:800px){.services-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){.services-grid{grid-template-columns:1fr}.offer-strip{align-items:flex-start}.offer-strip .btn{padding:9px 12px;font-size:10px}}
+
+</style>
 
     <!-- ============================================================
     JSON-LD
@@ -2383,42 +2387,17 @@
                 <p>Cuéntenos qué necesita. Juntos encontramos el siguiente paso.</p>
             </div>
 
+            <div class="offer-strip reveal"><span class="offer-mark">5%</span><div><strong>Beneficio de bienvenida</strong><small>Todos nuestros tratamientos con 5% de descuento.</small></div><button class="btn btn-primary" data-open-modal>Consultar</button></div>
             <div class="services-grid reveal">
-                <article class="service-card">
-                    <div class="image-wrap">
-                        <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=600&h=400&fit=crop&crop=center&auto=format" alt="Valoración odontológica" loading="lazy">
-                        <div class="overlay"></div>
-                    </div>
-                    <div class="content">
-                        <span class="number">01</span>
-                        <h3>Valoración</h3>
-                        <p>Entienda su sonrisa y elija con tranquilidad.</p>
-                    </div>
-                </article>
-
-                <article class="service-card">
-                    <div class="image-wrap">
-                        <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=600&h=400&fit=crop&crop=center&auto=format" alt="Odontología general" loading="lazy">
-                        <div class="overlay"></div>
-                    </div>
-                    <div class="content">
-                        <span class="number">02</span>
-                        <h3>Odontología general</h3>
-                        <p>Cuidado profesional para mantener su sonrisa saludable.</p>
-                    </div>
-                </article>
-
-                <article class="service-card">
-                    <div class="image-wrap">
-                        <img src="https://images.unsplash.com/photo-1588776814546-da8c6ef2d15b?w=600&h=400&fit=crop&crop=center&auto=format" alt="Odontología estética" loading="lazy">
-                        <div class="overlay"></div>
-                    </div>
-                    <div class="content">
-                        <span class="number">03</span>
-                        <h3>Odontología estética</h3>
-                        <p>Opciones estéticas pensadas para que sonría a su manera.</p>
-                    </div>
-                </article>
+                <article class="service-card"><div class="service-icon">✦</div><div class="content"><span class="number">01 · Estética</span><h3>Resinas estéticas</h3><p>Cambio de amalgamas por resinas para una sonrisa más armoniosa.</p></div></article>
+                <article class="service-card"><div class="service-icon">◈</div><div class="content"><span class="number">02 · Rehabilitación</span><h3>Coronas cerámicas</h3><p>Opciones en cerámica o porcelana según su valoración.</p></div></article>
+                <article class="service-card"><div class="service-icon">○</div><div class="content"><span class="number">03 · Rehabilitación</span><h3>Prótesis removible</h3><p>Alternativas para recuperar comodidad y función al sonreír.</p></div></article>
+                <article class="service-card"><div class="service-icon">✧</div><div class="content"><span class="number">04 · Estética</span><h3>Aclaramiento dental</h3><p>Conozca opciones para mejorar el aspecto de su sonrisa.</p></div></article>
+                <article class="service-card"><div class="service-icon">＋</div><div class="content"><span class="number">05 · Prevención</span><h3>Profilaxis dental</h3><p>Limpieza dental profesional para cuidar su salud oral.</p></div></article>
+                <article class="service-card"><div class="service-icon">⌁</div><div class="content"><span class="number">06 · Tratamiento</span><h3>Endodoncia</h3><p>Orientación y atención para conservar sus piezas dentales.</p></div></article>
+                <article class="service-card"><div class="service-icon">◇</div><div class="content"><span class="number">07 · Encías</span><h3>Periodoncia</h3><p>Valoración y cuidado especializado de sus encías.</p></div></article>
+                <article class="service-card"><div class="service-icon">⌬</div><div class="content"><span class="number">08 · Corrección</span><h3>Ortodoncia</h3><p>Converse sobre alternativas para alinear y cuidar su sonrisa.</p></div></article>
+                <article class="service-card urgent"><div class="service-icon">!</div><div class="content"><span class="number">09 · Atención</span><h3>Urgencias dentales</h3><p>Escríbanos para revisar su caso y conocer la disponibilidad.</p></div></article>
             </div>
         </div>
     </section>
@@ -2442,7 +2421,7 @@
                     <!--
                         RUTA PARA IMAGEN REAL DEL DOCTOR:
                         Reemplazar el div .img-placeholder por:
-                        <img src="assets/doctor-adrian-giraldo.jpg" alt="Dr. Adrián Giraldo Mejía" style="width:100%;height:100%;object-fit:cover;">
+                        
                     -->
                 </div>
                 <div class="doctor-info">
